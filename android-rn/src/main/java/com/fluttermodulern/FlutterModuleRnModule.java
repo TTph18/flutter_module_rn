@@ -2,6 +2,7 @@ package com.fluttermodulern;
 
 import androidx.annotation.NonNull;
 import android.app.Activity;
+import android.content.Intent;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
