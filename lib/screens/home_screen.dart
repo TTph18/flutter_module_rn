@@ -18,16 +18,26 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   ImagePicker? _imagePicker;
+  String bearToken = '';
 
   @override
   void initState() {
     super.initState();
     _imagePicker = ImagePicker();
+    _getPassedArguments();
   }
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  void _getPassedArguments() async {
+    // Get the Intent
+    Map intent = await const MethodChannel('flutter_activity')
+        .invokeMethod('getIntent') as Map<String, dynamic>;
+
+    bearToken = intent['bearToken'];
   }
 
   @override
@@ -40,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
           return ListView(
             shrinkWrap: true,
             children: [
+              Text(bearToken),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Row(
