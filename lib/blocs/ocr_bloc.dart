@@ -8,6 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
+import '../utils/text_processing_utils.dart';
+
 part 'ocr_bloc.freezed.dart';
 
 part 'ocr_event.dart';
@@ -32,20 +34,63 @@ class OCRBloc extends Bloc<OCREvent, OCRState> {
         await ImageUtils().getImageSize(Image.file(File(event.path)));
 
     String recognizedString = '';
+
     List<TextLine> textLines = [];
 
+    List<TextLine> possibleProduct = [];
+
+    List<TextLine> possibleTop = [];
+
+    List<TextLine> possibleBottom = [];
+
+    ///TODO: Seperate logic
     for (TextBlock block in recognizedText.blocks) {
       for (TextLine line in block.lines) {
+        if (OCRResultFilterUtils.isInList(line.text, s3fnbBillTop)) {
+          possibleTop.add(line);
+          continue;
+        } else if (OCRResultFilterUtils.isInList(line.text, s3fnbBillBottom)) {
+          possibleBottom.add(line);
+          continue;
+        }
         textLines.add(line);
-        recognizedString += '${line.text}\n\n';
       }
+    }
+
+    double? maxTop = OCRResultFilterUtils.getMaxTop(possibleTop);
+    double? maxBottom;
+    double? rightBoundary =
+        OCRResultFilterUtils.getRightBoundary(s3fnbBillTop[1], possibleTop);
+
+    ///TODO: Seperate logic and refactor
+    if (maxTop == null && maxBottom == null) {
+      possibleProduct.addAll(textLines);
+    } else if (maxTop != null && maxBottom == null) {
+      possibleProduct.addAll(textLines.where((element) =>
+          element.boundingBox.top < maxTop &&
+          (rightBoundary != null
+              ? element.boundingBox.right < rightBoundary
+              : true)));
+    } else if (maxTop == null && maxBottom != null) {
+      possibleProduct.addAll(textLines.where((element) =>
+          element.boundingBox.bottom > maxBottom &&
+          (rightBoundary != null
+              ? element.boundingBox.right < rightBoundary
+              : true)));
+    } else if (maxTop != null && maxBottom != null) {
+      possibleProduct.addAll(textLines.where((element) =>
+          element.boundingBox.top < maxTop &&
+          element.boundingBox.bottom > maxBottom &&
+          (rightBoundary != null
+              ? element.boundingBox.right < rightBoundary
+              : true)));
     }
 
     emit(_OCRLoadedState(
         data: state.data.copyWith(
             image: File(event.path),
             imageSize: imageSize,
-            ocrTextLines: textLines,
+            ocrTextLines: possibleProduct,
             ocrTextResult: recognizedString)));
   }
 }

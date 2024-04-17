@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
+ WidgetsFlutterBinding.ensureInitialized();
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -14,21 +14,8 @@ void main() {
       statusBarColor: Colors.transparent,
     ),
   );
-
-
   runApp(const MyApp());
 }
-
-// // Method to retrieve arguments passed from Android side
-// void getPassedArguments() async {
-//   // Get the Intent
-//   Map intent = await const MethodChannel('flutter_activity')
-//       .invokeMethod('getIntent') as Map<dynamic, dynamic>;
-//
-//   // Retrieve stringArgument and numberArgument
-//     stringArgument = intent['stringArgument'];
-//     numberArgument = intent['numberArgument'];
-// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

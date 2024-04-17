@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter_module_rn/blocs/ocr_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -18,13 +17,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   ImagePicker? _imagePicker;
-  String bearToken = '';
 
   @override
   void initState() {
     super.initState();
     _imagePicker = ImagePicker();
-    _getPassedArguments();
   }
 
   @override
@@ -32,25 +29,19 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
-  void _getPassedArguments() async {
-    // Get the Intent
-    Map intent = await const MethodChannel('flutter_activity')
-        .invokeMethod('getArguments') as Map<String, dynamic>;
-
-    bearToken = intent['bearToken'];
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.title, style: const TextStyle(color: Colors.white),),
+          title: Text(
+            widget.title,
+            style: const TextStyle(color: Colors.white),
+          ),
         ),
         body: BlocBuilder<OCRBloc, OCRState>(builder: (context, state) {
           return ListView(
             shrinkWrap: true,
             children: [
-              Text(bearToken),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Row(
@@ -76,16 +67,19 @@ class _MyHomePageState extends State<MyHomePage> {
               Center(
                 child: state.maybeMap(
                     orElse: () => state.data.image != null
-                        ? CustomPaint(
-                            size: state.data.imageSize ?? Size.zero,
-                            foregroundPainter: TextDetectorPainter(
-                              state.data.imageSize!,
-                              state.data.ocrTextLines,
-                            ),
-                            child: SizedBox(
-                              height: state.data.imageSize?.height,
-                              child: Image.file(
-                                state.data.image!,
+                        ? Container(
+                            height: MediaQuery.of(context).size.height * 0.5,
+                            color: Colors.black,
+                            child: CustomPaint(
+                              foregroundPainter: TextDetectorPainter(
+                                state.data.imageSize!,
+                                state.data.ocrTextLines,
+                              ),
+                              child: AspectRatio(
+                                aspectRatio: state.data.imageSize!.aspectRatio,
+                                child: Image.file(
+                                  state.data.image!,
+                                ),
                               ),
                             ),
                           )
@@ -98,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
               if (state.data.image != null)
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text(state.data.ocrTextResult ?? ''),
+                  child: Text(state.data.ocrTextLines.map((e) => e.text).join(', ') ?? ''),
                 ),
             ],
           );
