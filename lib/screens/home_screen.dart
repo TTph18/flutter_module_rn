@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:flutter_module_rn/blocs/ocr_bloc.dart';
+import 'package:cfox_ocr/blocs/ocr_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -33,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text(widget.title, style: const TextStyle(color: Colors.white),),
         ),
         body: BlocBuilder<OCRBloc, OCRState>(builder: (context, state) {
           return ListView(
@@ -61,31 +62,28 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               ),
-              state.maybeMap(
-                  orElse: () => state.data.image != null
-                      ? Container(
-                          width: double.maxFinite,
-                          color: Colors.black,
-                          child: CustomPaint(
+              Center(
+                child: state.maybeMap(
+                    orElse: () => state.data.image != null
+                        ? CustomPaint(
+                            size: state.data.imageSize ?? Size.zero,
                             foregroundPainter: TextDetectorPainter(
                               state.data.imageSize!,
                               state.data.ocrTextLines,
                             ),
-                            child: AspectRatio(
-                              aspectRatio: state.data.imageSize!.aspectRatio,
+                            child: SizedBox(
+                              height: state.data.imageSize?.height,
                               child: Image.file(
                                 state.data.image!,
                               ),
                             ),
+                          )
+                        : const Icon(
+                            Icons.image,
+                            size: 200,
                           ),
-                        )
-                      : const Icon(
-                          Icons.image,
-                          size: 200,
-                        ),
-                  loading: (_) => const SizedBox(
-                      height: 200,
-                      child: Center(child: CircularProgressIndicator()))),
+                    loading: (_) => const CircularProgressIndicator()),
+              ),
               if (state.data.image != null)
                 Padding(
                   padding: const EdgeInsets.all(16.0),

@@ -9,7 +9,7 @@ class TextDetectorPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final double scaleX = size.width / absoluteImageSize.width;
+    const double scaleX = 1;
     final double scaleY = size.height / absoluteImageSize.height;
 
     Rect scaleRect(TextLine container) {

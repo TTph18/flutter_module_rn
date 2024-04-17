@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter_module_rn/utils/image_utils.dart';
+import 'package:cfox_ocr/utils/image_utils.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,7 +37,7 @@ class OCRBloc extends Bloc<OCREvent, OCRState> {
     for (TextBlock block in recognizedText.blocks) {
       for (TextLine line in block.lines) {
         textLines.add(line);
-        recognizedString += '${line.text} ${line.boundingBox}\n\n';
+        recognizedString += '${line.text}\n\n';
       }
     }
 
