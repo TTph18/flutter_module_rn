@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$OCRStateData {
+  BillType get billType => throw _privateConstructorUsedError;
   File? get image => throw _privateConstructorUsedError;
   Size? get imageSize => throw _privateConstructorUsedError;
   String? get ocrTextResult => throw _privateConstructorUsedError;
@@ -33,7 +34,8 @@ abstract class $OCRStateDataCopyWith<$Res> {
       _$OCRStateDataCopyWithImpl<$Res, OCRStateData>;
   @useResult
   $Res call(
-      {File? image,
+      {BillType billType,
+      File? image,
       Size? imageSize,
       String? ocrTextResult,
       List<TextLine> ocrTextLines});
@@ -52,12 +54,17 @@ class _$OCRStateDataCopyWithImpl<$Res, $Val extends OCRStateData>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? billType = null,
     Object? image = freezed,
     Object? imageSize = freezed,
     Object? ocrTextResult = freezed,
     Object? ocrTextLines = null,
   }) {
     return _then(_value.copyWith(
+      billType: null == billType
+          ? _value.billType
+          : billType // ignore: cast_nullable_to_non_nullable
+              as BillType,
       image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -87,7 +94,8 @@ abstract class _$$OCRStateDataImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {File? image,
+      {BillType billType,
+      File? image,
       Size? imageSize,
       String? ocrTextResult,
       List<TextLine> ocrTextLines});
@@ -104,12 +112,17 @@ class __$$OCRStateDataImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? billType = null,
     Object? image = freezed,
     Object? imageSize = freezed,
     Object? ocrTextResult = freezed,
     Object? ocrTextLines = null,
   }) {
     return _then(_$OCRStateDataImpl(
+      billType: null == billType
+          ? _value.billType
+          : billType // ignore: cast_nullable_to_non_nullable
+              as BillType,
       image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -134,12 +147,16 @@ class __$$OCRStateDataImplCopyWithImpl<$Res>
 
 class _$OCRStateDataImpl implements _OCRStateData {
   const _$OCRStateDataImpl(
-      {this.image,
+      {this.billType = BillType.S3FNB,
+      this.image,
       this.imageSize,
       this.ocrTextResult,
       final List<TextLine> ocrTextLines = const []})
       : _ocrTextLines = ocrTextLines;
 
+  @override
+  @JsonKey()
+  final BillType billType;
   @override
   final File? image;
   @override
@@ -157,7 +174,7 @@ class _$OCRStateDataImpl implements _OCRStateData {
 
   @override
   String toString() {
-    return 'OCRStateData(image: $image, imageSize: $imageSize, ocrTextResult: $ocrTextResult, ocrTextLines: $ocrTextLines)';
+    return 'OCRStateData(billType: $billType, image: $image, imageSize: $imageSize, ocrTextResult: $ocrTextResult, ocrTextLines: $ocrTextLines)';
   }
 
   @override
@@ -165,6 +182,8 @@ class _$OCRStateDataImpl implements _OCRStateData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OCRStateDataImpl &&
+            (identical(other.billType, billType) ||
+                other.billType == billType) &&
             (identical(other.image, image) || other.image == image) &&
             (identical(other.imageSize, imageSize) ||
                 other.imageSize == imageSize) &&
@@ -175,8 +194,8 @@ class _$OCRStateDataImpl implements _OCRStateData {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, image, imageSize, ocrTextResult,
-      const DeepCollectionEquality().hash(_ocrTextLines));
+  int get hashCode => Object.hash(runtimeType, billType, image, imageSize,
+      ocrTextResult, const DeepCollectionEquality().hash(_ocrTextLines));
 
   @JsonKey(ignore: true)
   @override
@@ -187,11 +206,14 @@ class _$OCRStateDataImpl implements _OCRStateData {
 
 abstract class _OCRStateData implements OCRStateData {
   const factory _OCRStateData(
-      {final File? image,
+      {final BillType billType,
+      final File? image,
       final Size? imageSize,
       final String? ocrTextResult,
       final List<TextLine> ocrTextLines}) = _$OCRStateDataImpl;
 
+  @override
+  BillType get billType;
   @override
   File? get image;
   @override

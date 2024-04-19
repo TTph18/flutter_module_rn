@@ -3,7 +3,8 @@ part of 'ocr_bloc.dart';
 @freezed
 class OCRStateData with _$OCRStateData {
   const factory OCRStateData(
-      {File? image,
+      {@Default(BillType.S3FNB) BillType billType,
+      File? image,
       Size? imageSize,
       String? ocrTextResult,
       @Default([]) List<TextLine> ocrTextLines}) = _OCRStateData;

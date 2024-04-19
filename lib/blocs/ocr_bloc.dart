@@ -21,40 +21,61 @@ class OCRBloc extends Bloc<OCREvent, OCRState> {
 
   OCRBloc({required this.textRecognizer}) : super(const _OCRInitialState()) {
     on<ProcessImageEvent>(_processImage);
+    on<ChangeBillTypeEvent>(_changeBillType);
+  }
+
+  void _changeBillType(ChangeBillTypeEvent event, Emitter<OCRState> emit) {
+    emit(OCRState.loading(data: state.data));
+
+    if (state.data.image == null) {
+      emit(OCRState.loaded(
+          data: state.data.copyWith(
+              ocrTextResult: '', ocrTextLines: [], billType: event.type)));
+      return;
+    }
+
+    emit(OCRState.loaded(data: state.data.copyWith(billType: event.type)));
+
+    add(ProcessImageEvent(path: state.data.image!.path));
   }
 
   Future<void> _processImage(
       ProcessImageEvent event, Emitter<OCRState> emit) async {
-    emit(const _OCRLoadingState(data: OCRStateData()));
+    emit(_OCRLoadingState(
+        data: state.data.copyWith(ocrTextResult: '', ocrTextLines: [])));
 
     final inputImage = InputImage.fromFilePath(event.path);
     final recognizedText = await textRecognizer.processImage(inputImage);
 
     Size imageSize =
-    await ImageUtils.getImageSize(Image.file(File(event.path)));
+        await ImageUtils.getImageSize(Image.file(File(event.path)));
 
     String recognizedString = '';
 
-    List<TextLine> textLines = [];
+    List<TextLine> detectedProducts = [];
 
-    List<TextLine> possibleProduct = [];
+    List<TextLine> filteredProducts = [];
 
     List<TextLine> possibleTop = [];
 
     List<TextLine> possibleBottom = [];
 
-    ///TODO: Seperate logic
+    ///Grouping detected texts
+    ///TODO: Separate logic
     for (TextBlock block in recognizedText.blocks) {
       for (TextLine line in block.lines) {
-        if (OCRResultFilterUtils.isInList(line.text, s3fnbBillTop)) {
+        if (OCRResultFilterUtils.isInList(
+            line.text, state.data.billType.textTop)) {
           possibleTop.add(line);
           continue;
-        } else if (OCRResultFilterUtils.isInList(line.text, s3fnbBillBottom)) {
+        } else if (OCRResultFilterUtils.isInList(
+            line.text, state.data.billType.textBottom)) {
           possibleBottom.add(line);
           continue;
         }
-
-        textLines.add(line);
+        if(int.tryParse(line.text) == null) {
+          detectedProducts.add(line);
+        }
       }
     }
 
@@ -63,30 +84,31 @@ class OCRBloc extends Bloc<OCREvent, OCRState> {
 
     double? maxTop = OCRResultFilterUtils.getMaxCoordinate(possibleTop);
     double? maxBottom = OCRResultFilterUtils.getMaxCoordinate(possibleBottom);
-    double? rightBoundary =
-    OCRResultFilterUtils.findAndGetRightCoordinate(s3fnbBillTop[1], possibleTop);
+    double? rightBoundary = OCRResultFilterUtils.findAndGetRightCoordinate(
+        s3fnbBillTop[1], possibleTop);
 
     print(maxTop);
     print(maxBottom);
 
-    ///TODO: Seperate logic and refactor
+    ///Filter text within specific coordinations
+    ///TODO: Separate logic and refactor
     if (maxTop == null && maxBottom == null) {
-      possibleProduct.addAll(textLines);
+      filteredProducts.addAll(detectedProducts);
     } else if (maxTop != null && maxBottom == null) {
-      possibleProduct.addAll(textLines.where((element) =>
-      element.boundingBox.top > maxTop &&
+      filteredProducts.addAll(detectedProducts.where((element) =>
+          element.boundingBox.top > maxTop &&
           (rightBoundary != null
               ? element.boundingBox.right < rightBoundary
               : true)));
     } else if (maxTop == null && maxBottom != null) {
-      possibleProduct.addAll(textLines.where((element) =>
-      element.boundingBox.bottom < maxBottom &&
+      filteredProducts.addAll(detectedProducts.where((element) =>
+          element.boundingBox.bottom < maxBottom &&
           (rightBoundary != null
               ? element.boundingBox.right < rightBoundary
               : true)));
     } else if (maxTop != null && maxBottom != null) {
-      possibleProduct.addAll(textLines.where((element) =>
-      element.boundingBox.top > maxTop &&
+      filteredProducts.addAll(detectedProducts.where((element) =>
+          element.boundingBox.top > maxTop &&
           element.boundingBox.bottom < maxBottom &&
           (rightBoundary != null
               ? element.boundingBox.right < rightBoundary
@@ -97,7 +119,7 @@ class OCRBloc extends Bloc<OCREvent, OCRState> {
         data: state.data.copyWith(
             image: File(event.path),
             imageSize: imageSize,
-            ocrTextLines: possibleProduct,
+            ocrTextLines: filteredProducts,
             ocrTextResult: recognizedString)));
   }
 }

@@ -3,12 +3,13 @@ import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart
 import 'character_utils.dart';
 
 enum BillType {
-  GRAB(grabFoodTop, grabFoodBottom),
-  S3FNB(s3fnbBillTop, s3fnbBillBottom),
-  SHOPEE(shopeeFoodTop, shopeeFoodBottom);
+  S3FNB('s3fnb',s3fnbBillTop, s3fnbBillBottom),
+  GRAB('Grab',grabFoodTop, grabFoodBottom),
+  SHOPEE('ShopeeFood',shopeeFoodTop, shopeeFoodBottom);
 
-  const BillType(this.textTop, this.textBottom);
+  const BillType(this.name, this.textTop, this.textBottom);
 
+  final String name;
   final List<String> textTop;
   final List<String> textBottom;
 }
@@ -23,6 +24,7 @@ const List<String> s3fnbBillBottom = [
 
 const List<String> shopeeFoodTop = ['mon', 'tong tien', 'gia'];
 const List<String> shopeeFoodBottom = [
+  'tong mon',
   'tong mon (gia goc)',
   'tong tien mon',
   'giam gia mon',
@@ -62,7 +64,7 @@ abstract class OCRResultFilterUtils {
     if (textLines.isEmpty) return null;
 
     List<double> topCoordinates =
-    textLines.map((textLine) => textLine.boundingBox.top).toList();
+        textLines.map((textLine) => textLine.boundingBox.top).toList();
 
     double maximumTop;
     double minimumTop;
