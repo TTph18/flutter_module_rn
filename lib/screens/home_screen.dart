@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter_module_rn/blocs/ocr_bloc.dart';
+import 'package:flutter_module_rn/utils/image_utils.dart';
 import 'package:flutter_module_rn/utils/text_processing_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../widgets/text_detector_painter.dart';
@@ -60,7 +63,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                             foregroundColor: Colors.white)
                                         : null,
                                     onPressed: () {
-                                      context.read<OCRBloc>().add(ChangeBillTypeEvent(type: e));
+                                      context
+                                          .read<OCRBloc>()
+                                          .add(ChangeBillTypeEvent(type: e));
                                     },
                                     child: Text(e.name),
                                   ),
@@ -135,9 +140,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _getImage(ImageSource source) async {
     final pickedFile = await _imagePicker?.pickImage(source: source);
+
     if (pickedFile != null) {
+    final fixedImage = await FlutterExifRotation.rotateAndSaveImage(path: pickedFile.path);
+
       if (mounted) {
-        context.read<OCRBloc>().add(ProcessImageEvent(path: pickedFile.path));
+        context.read<OCRBloc>().add(ProcessImageEvent(path: fixedImage.path));
       }
     }
   }
