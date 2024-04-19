@@ -36,10 +36,10 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _getPassedArguments() async {
-    Map intent = await const MethodChannel('flutter_activity')
-        .invokeMethod('getArguments') as Map<String, dynamic>;
+    final intent = await const MethodChannel('flutter_activity')
+        .invokeMethod('getArguments');
 
-    bearToken = intent['bearToken'];
+    bearToken = intent;
   }
 
   @override

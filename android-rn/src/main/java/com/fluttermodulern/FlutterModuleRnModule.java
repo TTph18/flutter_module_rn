@@ -37,7 +37,7 @@ public class FlutterModuleRnModule extends ReactContextBaseJavaModule {
     public void startFlutterActivity(String bearToken, int numberArgument, Callback callback) {
         Activity currentActivity = reactContext.getCurrentActivity();
 
-        Intent intent = CustomFlutterActivity.createDefaultIntent(currentActivity);
+        Intent intent = new Intent(currentActivity, CustomFlutterActivity.class);
 
         // Pass arguments to the Intent
         intent.putExtra("bearToken", bearToken);
