@@ -14,6 +14,8 @@ void main() {
       statusBarColor: Colors.transparent,
     ),
   );
+ SystemChrome.setPreferredOrientations(
+     [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
   runApp(const MyApp());
 }
 
