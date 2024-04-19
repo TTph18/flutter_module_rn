@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:flutter_module_rn/blocs/ocr_bloc.dart';
-import 'package:flutter_module_rn/utils/image_utils.dart';
 import 'package:flutter_module_rn/utils/text_processing_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,16 +21,25 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   ImagePicker? _imagePicker;
+  String bearToken = '';
 
   @override
   void initState() {
     super.initState();
     _imagePicker = ImagePicker();
+    _getPassedArguments();
   }
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  void _getPassedArguments() async {
+    Map intent = await const MethodChannel('flutter_activity')
+        .invokeMethod('getArguments') as Map<String, dynamic>;
+
+    bearToken = intent['bearToken'];
   }
 
   @override
@@ -41,11 +50,18 @@ class _MyHomePageState extends State<MyHomePage> {
             widget.title,
             style: const TextStyle(color: Colors.white),
           ),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white,),
+            onPressed: () {
+              SystemNavigator.pop();
+            },
+          ),
         ),
         body: BlocBuilder<OCRBloc, OCRState>(builder: (context, state) {
           return SingleChildScrollView(
             child: Column(
               children: [
+                Text(bearToken),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Row(
@@ -142,7 +158,8 @@ class _MyHomePageState extends State<MyHomePage> {
     final pickedFile = await _imagePicker?.pickImage(source: source);
 
     if (pickedFile != null) {
-    final fixedImage = await FlutterExifRotation.rotateAndSaveImage(path: pickedFile.path);
+      final fixedImage =
+          await FlutterExifRotation.rotateAndSaveImage(path: pickedFile.path);
 
       if (mounted) {
         context.read<OCRBloc>().add(ProcessImageEvent(path: fixedImage.path));

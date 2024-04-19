@@ -15,16 +15,16 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
+import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
+import io.flutter.plugin.common.MethodChannel.Result;
 
 public class FlutterModuleRnModule extends ReactContextBaseJavaModule {
 
     private final ReactApplicationContext reactContext;
-    private static final String METHOD_CHANNEL_NAME = "flutter_activity";
 
     public FlutterModuleRnModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
-//        initializeMethodChannel();
     }
 
     @NonNull
@@ -33,31 +33,11 @@ public class FlutterModuleRnModule extends ReactContextBaseJavaModule {
         return "FlutterModuleRn";
     }
 
-//    private void initializeMethodChannel() {
-//        new MethodChannel(reactContext.getCatalystInstance().getReactQueue().getThread(), METHOD_CHANNEL_NAME)
-//                .setMethodCallHandler(
-//                        (call, result) -> {
-//                            if (call.method.equals("getArguments")) {
-//                                Intent intent = reactContext.getCurrentActivity().getIntent();
-//                                if (intent != null) {
-//                                    String bearToken = intent.getStringExtra("bearToken");
-//                                    int numberArgument = intent.getIntExtra("numberArgument", 0);
-//                                    result.success(bearToken + "|" + numberArgument);
-//                                } else {
-//                                    result.error("NO_INTENT", "Intent is null", null);
-//                                }
-//                            } else {
-//                                result.notImplemented();
-//                            }
-//                        }
-//                );
-//    }
-
     @ReactMethod
     public void startFlutterActivity(String bearToken, int numberArgument, Callback callback) {
         Activity currentActivity = reactContext.getCurrentActivity();
 
-        Intent intent = FlutterActivity.createDefaultIntent(currentActivity);
+        Intent intent = CustomFlutterActivity.createDefaultIntent(currentActivity);
 
         // Pass arguments to the Intent
         intent.putExtra("bearToken", bearToken);
