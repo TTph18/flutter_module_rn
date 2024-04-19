@@ -33,25 +33,25 @@ public class FlutterModuleRnModule extends ReactContextBaseJavaModule {
         return "FlutterModuleRn";
     }
 
-    private void initializeMethodChannel() {
-        new MethodChannel(reactContext.getCatalystInstance().getReactQueue().getThread(), METHOD_CHANNEL_NAME)
-                .setMethodCallHandler(
-                        (call, result) -> {
-                            if (call.method.equals("getArguments")) {
-                                Intent intent = reactContext.getCurrentActivity().getIntent();
-                                if (intent != null) {
-                                    String bearToken = intent.getStringExtra("bearToken");
-                                    int numberArgument = intent.getIntExtra("numberArgument", 0);
-                                    result.success(bearToken + "|" + numberArgument);
-                                } else {
-                                    result.error("NO_INTENT", "Intent is null", null);
-                                }
-                            } else {
-                                result.notImplemented();
-                            }
-                        }
-                );
-    }
+//    private void initializeMethodChannel() {
+//        new MethodChannel(reactContext.getCatalystInstance().getReactQueue().getThread(), METHOD_CHANNEL_NAME)
+//                .setMethodCallHandler(
+//                        (call, result) -> {
+//                            if (call.method.equals("getArguments")) {
+//                                Intent intent = reactContext.getCurrentActivity().getIntent();
+//                                if (intent != null) {
+//                                    String bearToken = intent.getStringExtra("bearToken");
+//                                    int numberArgument = intent.getIntExtra("numberArgument", 0);
+//                                    result.success(bearToken + "|" + numberArgument);
+//                                } else {
+//                                    result.error("NO_INTENT", "Intent is null", null);
+//                                }
+//                            } else {
+//                                result.notImplemented();
+//                            }
+//                        }
+//                );
+//    }
 
     @ReactMethod
     public void startFlutterActivity(String bearToken, int numberArgument, Callback callback) {
