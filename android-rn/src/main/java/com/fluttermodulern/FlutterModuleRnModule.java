@@ -24,7 +24,7 @@ public class FlutterModuleRnModule extends ReactContextBaseJavaModule {
     public FlutterModuleRnModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
-        initializeMethodChannel();
+//        initializeMethodChannel();
     }
 
     @NonNull
