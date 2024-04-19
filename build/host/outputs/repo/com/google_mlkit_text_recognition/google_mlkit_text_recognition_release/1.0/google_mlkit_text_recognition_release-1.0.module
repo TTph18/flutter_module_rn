@@ -1,0 +1,90 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.google_mlkit_text_recognition",
+    "module": "google_mlkit_text_recognition_release",
+    "version": "1.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.5"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "io.flutter",
+          "module": "flutter_embedding_release",
+          "version": {
+            "requires": "1.0.0-04817c99c9fd4956f27505204f7e344335810aed"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "google_mlkit_text_recognition_release-1.0.aar",
+          "url": "google_mlkit_text_recognition_release-1.0.aar",
+          "size": 9054,
+          "sha512": "94e35e51a4ae26f2fe54446ef2016b13e7f2499027f590f74a9644a62145d1a080023601914e4ce8ac4832514a34965f81fe8554f5019b541835c6134d39dd0e",
+          "sha256": "5f2ac07356b01fed386739b6a91f585b959023fa5d336a28117dbcfc48caf97c",
+          "sha1": "7dab98fc9eac322d08849fc6e65971b4c70b4946",
+          "md5": "c8572e03df7b442a979a60b463e5efd1"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "io.flutter",
+          "module": "flutter_embedding_release",
+          "version": {
+            "requires": "1.0.0-04817c99c9fd4956f27505204f7e344335810aed"
+          }
+        },
+        {
+          "group": "com.google.mlkit",
+          "module": "text-recognition",
+          "version": {
+            "requires": "16.0.0"
+          }
+        },
+        {
+          "group": "com.google_mlkit_commons",
+          "module": "google_mlkit_commons_release",
+          "version": {
+            "requires": "1.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "google_mlkit_text_recognition_release-1.0.aar",
+          "url": "google_mlkit_text_recognition_release-1.0.aar",
+          "size": 9054,
+          "sha512": "94e35e51a4ae26f2fe54446ef2016b13e7f2499027f590f74a9644a62145d1a080023601914e4ce8ac4832514a34965f81fe8554f5019b541835c6134d39dd0e",
+          "sha256": "5f2ac07356b01fed386739b6a91f585b959023fa5d336a28117dbcfc48caf97c",
+          "sha1": "7dab98fc9eac322d08849fc6e65971b4c70b4946",
+          "md5": "c8572e03df7b442a979a60b463e5efd1"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "io.flutter.plugins.flutterexifrotation",
+    "module": "flutter_exif_rotation_release",
+    "version": "1.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.5"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "io.flutter",
+          "module": "flutter_embedding_release",
+          "version": {
+            "requires": "1.0.0-04817c99c9fd4956f27505204f7e344335810aed"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "flutter_exif_rotation_release-1.0.aar",
+          "url": "flutter_exif_rotation_release-1.0.aar",
+          "size": 10252,
+          "sha512": "3aa030557034fd9ade0a84198330eeef446b8ff95eec72412ca5f865d04e008ce70c9a9fcb3462dd00112601434ddfb5022596c4161b61bcffbf43580af01717",
+          "sha256": "697a75158fa8e9f80571314c898e45761d968429eda1a84382d7eb019de7baff",
+          "sha1": "a9dd6b2bc5275b1a93d14fb11e78c5eeb0b805bd",
+          "md5": "1b00fe35176d6f038a776b107cda1be8"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "io.flutter",
+          "module": "flutter_embedding_release",
+          "version": {
+            "requires": "1.0.0-04817c99c9fd4956f27505204f7e344335810aed"
+          }
+        },
+        {
+          "group": "androidx.exifinterface",
+          "module": "exifinterface",
+          "version": {
+            "requires": "1.3.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk7",
+          "version": {
+            "requires": "1.6.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "flutter_exif_rotation_release-1.0.aar",
+          "url": "flutter_exif_rotation_release-1.0.aar",
+          "size": 10252,
+          "sha512": "3aa030557034fd9ade0a84198330eeef446b8ff95eec72412ca5f865d04e008ce70c9a9fcb3462dd00112601434ddfb5022596c4161b61bcffbf43580af01717",
+          "sha256": "697a75158fa8e9f80571314c898e45761d968429eda1a84382d7eb019de7baff",
+          "sha1": "a9dd6b2bc5275b1a93d14fb11e78c5eeb0b805bd",
+          "md5": "1b00fe35176d6f038a776b107cda1be8"
+        }
+      ]
+    }
+  ]
+}

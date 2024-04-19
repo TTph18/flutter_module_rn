@@ -1,0 +1,202 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.example.flutter_module_rn",
+    "module": "flutter_profile",
+    "version": "1.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.5"
+    }
+  },
+  "variants": [
+    {
+      "name": "profileVariantProfileApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "io.flutter",
+          "module": "flutter_embedding_profile",
+          "version": {
+            "requires": "1.0.0-04817c99c9fd4956f27505204f7e344335810aed"
+          }
+        },
+        {
+          "group": "io.flutter",
+          "module": "armeabi_v7a_profile",
+          "version": {
+            "requires": "1.0.0-04817c99c9fd4956f27505204f7e344335810aed"
+          }
+        },
+        {
+          "group": "io.flutter",
+          "module": "arm64_v8a_profile",
+          "version": {
+            "requires": "1.0.0-04817c99c9fd4956f27505204f7e344335810aed"
+          }
+        },
+        {
+          "group": "io.flutter",
+          "module": "x86_64_profile",
+          "version": {
+            "requires": "1.0.0-04817c99c9fd4956f27505204f7e344335810aed"
+          }
+        },
+        {
+          "group": "io.flutter.plugins.flutter_plugin_android_lifecycle",
+          "module": "flutter_plugin_android_lifecycle_profile",
+          "version": {
+            "requires": "1.0"
+          }
+        },
+        {
+          "group": "com.google_mlkit_text_recognition",
+          "module": "google_mlkit_text_recognition_profile",
+          "version": {
+            "requires": "1.0"
+          }
+        },
+        {
+          "group": "com.google_mlkit_commons",
+          "module": "google_mlkit_commons_profile",
+          "version": {
+            "requires": "1.0"
+          }
+        },
+        {
+          "group": "io.flutter.plugins.flutterexifrotation",
+          "module": "flutter_exif_rotation_profile",
+          "version": {
+            "requires": "1.0"
+          }
+        },
+        {
+          "group": "io.flutter.plugins.camera",
+          "module": "camera_android_profile",
+          "version": {
+            "requires": "1.0"
+          }
+        },
+        {
+          "group": "io.flutter.plugins.imagepicker",
+          "module": "image_picker_android_profile",
+          "version": {
+            "requires": "1.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "flutter_profile-1.0.aar",
+          "url": "flutter_profile-1.0.aar",
+          "size": 6995460,
+          "sha512": "040b4a3090ac6469494edad2bd01c00955b557da1d40cffb5e96d3a3c06c3586ad22c6593ed91e99d2817690dc53a0ba6b25101a1705936136df01df0a7dc0d0",
+          "sha256": "5fd2336712f7f087449498569fddf7ad7d53231dd8d28aa4d584723cfebc62e0",
+          "sha1": "4a8bc64a39e48b4a67a3c324e7778a26d0c2eb9a",
+          "md5": "0f1996d5729bca2052e3a542c43d7a5d"
+        }
+      ]
+    },
+    {
+      "name": "profileVariantProfileRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "io.flutter",
+          "module": "flutter_embedding_profile",
+          "version": {
+            "requires": "1.0.0-04817c99c9fd4956f27505204f7e344335810aed"
+          }
+        },
+        {
+          "group": "io.flutter",
+          "module": "armeabi_v7a_profile",
+          "version": {
+            "requires": "1.0.0-04817c99c9fd4956f27505204f7e344335810aed"
+          }
+        },
+        {
+          "group": "io.flutter",
+          "module": "arm64_v8a_profile",
+          "version": {
+            "requires": "1.0.0-04817c99c9fd4956f27505204f7e344335810aed"
+          }
+        },
+        {
+          "group": "io.flutter",
+          "module": "x86_64_profile",
+          "version": {
+            "requires": "1.0.0-04817c99c9fd4956f27505204f7e344335810aed"
+          }
+        },
+        {
+          "group": "io.flutter.plugins.flutter_plugin_android_lifecycle",
+          "module": "flutter_plugin_android_lifecycle_profile",
+          "version": {
+            "requires": "1.0"
+          }
+        },
+        {
+          "group": "com.google_mlkit_text_recognition",
+          "module": "google_mlkit_text_recognition_profile",
+          "version": {
+            "requires": "1.0"
+          }
+        },
+        {
+          "group": "com.google_mlkit_commons",
+          "module": "google_mlkit_commons_profile",
+          "version": {
+            "requires": "1.0"
+          }
+        },
+        {
+          "group": "io.flutter.plugins.flutterexifrotation",
+          "module": "flutter_exif_rotation_profile",
+          "version": {
+            "requires": "1.0"
+          }
+        },
+        {
+          "group": "io.flutter.plugins.camera",
+          "module": "camera_android_profile",
+          "version": {
+            "requires": "1.0"
+          }
+        },
+        {
+          "group": "io.flutter.plugins.imagepicker",
+          "module": "image_picker_android_profile",
+          "version": {
+            "requires": "1.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "flutter_profile-1.0.aar",
+          "url": "flutter_profile-1.0.aar",
+          "size": 6995460,
+          "sha512": "040b4a3090ac6469494edad2bd01c00955b557da1d40cffb5e96d3a3c06c3586ad22c6593ed91e99d2817690dc53a0ba6b25101a1705936136df01df0a7dc0d0",
+          "sha256": "5fd2336712f7f087449498569fddf7ad7d53231dd8d28aa4d584723cfebc62e0",
+          "sha1": "4a8bc64a39e48b4a67a3c324e7778a26d0c2eb9a",
+          "md5": "0f1996d5729bca2052e3a542c43d7a5d"
+        }
+      ]
+    }
+  ]
+}
