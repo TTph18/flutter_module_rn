@@ -73,7 +73,11 @@ class OCRBloc extends Bloc<OCREvent, OCRState> {
           possibleBottom.add(line);
           continue;
         }
-        if(int.tryParse(line.text) == null) {
+        if (int.tryParse(line.text
+              ..replaceAll('.', '')
+              ..replaceAll(',', '')
+              ..replaceAll('d', '')) ==
+            null) {
           detectedProducts.add(line);
         }
       }
@@ -83,7 +87,7 @@ class OCRBloc extends Bloc<OCREvent, OCRState> {
     print(possibleTop.map((e) => e.text));
 
     double? maxTop = OCRResultFilterUtils.getMaxCoordinate(possibleTop);
-    double? maxBottom = OCRResultFilterUtils.getMaxCoordinate(possibleBottom);
+    double? maxBottom = OCRResultFilterUtils.getMinCoordinate(possibleBottom);
     double? rightBoundary = OCRResultFilterUtils.findAndGetRightCoordinate(
         s3fnbBillTop[1], possibleTop);
 
