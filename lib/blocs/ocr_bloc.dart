@@ -31,7 +31,7 @@ class OCRBloc extends Bloc<OCREvent, OCRState> {
     final recognizedText = await textRecognizer.processImage(inputImage);
 
     Size imageSize =
-        await ImageUtils().getImageSize(Image.file(File(event.path)));
+    await ImageUtils.getImageSize(Image.file(File(event.path)));
 
     String recognizedString = '';
 
@@ -53,34 +53,41 @@ class OCRBloc extends Bloc<OCREvent, OCRState> {
           possibleBottom.add(line);
           continue;
         }
+
         textLines.add(line);
       }
     }
 
-    double? maxTop = OCRResultFilterUtils.getMaxTop(possibleTop);
-    double? maxBottom;
+    print(possibleBottom.map((e) => e.text));
+    print(possibleTop.map((e) => e.text));
+
+    double? maxTop = OCRResultFilterUtils.getMaxCoordinate(possibleTop);
+    double? maxBottom = OCRResultFilterUtils.getMaxCoordinate(possibleBottom);
     double? rightBoundary =
-        OCRResultFilterUtils.getRightBoundary(s3fnbBillTop[1], possibleTop);
+    OCRResultFilterUtils.findAndGetRightCoordinate(s3fnbBillTop[1], possibleTop);
+
+    print(maxTop);
+    print(maxBottom);
 
     ///TODO: Seperate logic and refactor
     if (maxTop == null && maxBottom == null) {
       possibleProduct.addAll(textLines);
     } else if (maxTop != null && maxBottom == null) {
       possibleProduct.addAll(textLines.where((element) =>
-          element.boundingBox.top < maxTop &&
+      element.boundingBox.top > maxTop &&
           (rightBoundary != null
               ? element.boundingBox.right < rightBoundary
               : true)));
     } else if (maxTop == null && maxBottom != null) {
       possibleProduct.addAll(textLines.where((element) =>
-          element.boundingBox.bottom > maxBottom &&
+      element.boundingBox.bottom < maxBottom &&
           (rightBoundary != null
               ? element.boundingBox.right < rightBoundary
               : true)));
     } else if (maxTop != null && maxBottom != null) {
       possibleProduct.addAll(textLines.where((element) =>
-          element.boundingBox.top < maxTop &&
-          element.boundingBox.bottom > maxBottom &&
+      element.boundingBox.top > maxTop &&
+          element.boundingBox.bottom < maxBottom &&
           (rightBoundary != null
               ? element.boundingBox.right < rightBoundary
               : true)));

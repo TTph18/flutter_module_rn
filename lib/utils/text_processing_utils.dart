@@ -58,9 +58,11 @@ abstract class OCRResultFilterUtils {
   }
 
   ///Method to get maximum top coordination in a list
-  static double? getMaxTop(List<TextLine> textLines) {
+  static double? getMaxCoordinate(List<TextLine> textLines) {
+    if (textLines.isEmpty) return null;
+
     List<double> topCoordinates =
-        textLines.map((textLine) => textLine.boundingBox.top).toList();
+    textLines.map((textLine) => textLine.boundingBox.top).toList();
 
     double maximumTop;
     double minimumTop;
@@ -87,10 +89,10 @@ abstract class OCRResultFilterUtils {
     return topCoordinates.first;
   }
 
-  ///Method look for the input target in a list and return right coordination
+  ///Method look for the input target in a list and return its right coordination
   ///Return right coordination if found
   ///Return null if none satisfy
-  static double? getRightBoundary(String target, List<TextLine> textLines) {
+  static double? findAndGetRightCoordinate(String target, List<TextLine> textLines) {
     List<TextLine> compareList = textLines.map((textLine) => textLine).toList();
 
     while (compareList.length > 1) {
